@@ -1,4 +1,4 @@
-<!-- Inital 3D model -->
+<!-- Inital 3D -->
 
 <Node name="root" dt="0.01">
     <RequiredPlugin name="Sofa.Component.IO.Mesh"/> 

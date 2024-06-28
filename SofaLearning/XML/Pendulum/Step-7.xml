@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<Node name="root" gravity="0 0 -9.81" dt="0.01"> 
+
+    <!-- Required plugins for various SOFA components -->
+    <RequiredPlugin name="Sofa.Component.Constraint.Projective"/> <!-- Needed to use FixedProjectiveConstraint -->
+    <RequiredPlugin name="Sofa.Component.Mass"/> <!-- Needed to use UniformMass -->
+    <RequiredPlugin name="Sofa.Component.ODESolver.Backward"/> <!-- Needed to use EulerImplicitSolver -->
+    <RequiredPlugin name="Sofa.Component.LinearSolver.Iterative"/> <!-- Needed to use CGLinearSolver -->
+    <RequiredPlugin name="Sofa.Component.SolidMechanics.Spring"/> <!-- Needed to use StiffSpringForceField -->
+    <RequiredPlugin name="Sofa.Component.StateContainer"/> <!-- Needed to use MechanicalObject -->
+    <RequiredPlugin name="Sofa.Component.Visual"/> <!-- Needed to use Visual components like VisualGrid -->
+    <RequiredPlugin name="Sofa.Component.IO.Mesh"/> <!-- Needed for mesh input/output components -->
+    <RequiredPlugin name="Sofa.Component.Setting"/> <!-- Needed for setting components -->
+    <RequiredPlugin name="Sofa.GL.Component.Rendering3D"/> <!-- Needed for 3D rendering components -->
+
+    <!-- Visual settings for the scene -->
+    <VisualStyle displayFlags="showBehavior"/> <!-- Sets display options for the scene -->
+    <DefaultAnimationLoop/> <!-- Defines the default animation loop for the simulation -->
+
+    <!-- ODE solver and linear solver for the simulation -->
+    <EulerImplicitSolver name="Implicit Euler Solver" rayleighStiffness="0.1" rayleighMass="0.1" /> <!-- Implicit Euler solver settings -->
+    <CGLinearSolver template="GraphScattered" name="Conjugate Gradient" iterations="25" tolerance="1e-5" threshold="1e-5"/> <!-- Conjugate Gradient solver settings -->
+
+    <!-- Additional visual components -->
+    <VisualGrid size="10"/> <!-- Adds a visual grid to the scene with specified size -->
+    <LineAxis size="@grid.size"/> <!-- Adds axis lines based on the grid size -->
+    <OglSceneFrame/> <!-- Adds a 3D scene frame -->
+
+    <!-- First object in the scene -->
+    <Node name="Object1" gravity="0 -9.81 0"> <!-- Node representing the first object with gravity -->
+        <MechanicalObject template="Vec3" name="Particles" restScale="1" position="0 0 0 1 0 0" showObject="1" showObjectScale="10"/> <!-- Mechanical object with particle positions and visualization settings -->
+        <UniformMass template="Vec3" name="Mass"/> <!-- Uniform mass component for the object -->
+        <FixedProjectiveConstraint template="Vec3" name="Fix Particles" indices="0"/> <!-- Constraint fixing the first particle -->
+        <StiffSpringForceField template="Vec3" name="Internal Spring" spring="0 1 100 0.1 1&#x0A;"/> <!-- Spring force field within the object -->
+    </Node>
+
+    <!-- Second object in the scene -->
+    <Node name="Object2" gravity="0 -9.81 0"> <!-- Node representing the second object with gravity -->
+        <VisualStyle displayFlags="showVisual hideBehavior hideCollision hideMapping hideOptions"/> <!-- Visual style settings for the object -->
+        <MechanicalObject template="Vec3" name="Particles" position="2 0 0" restScale="1" showObject="1" showObjectScale="10"/> <!-- Mechanical object with particle positions and visualization settings -->
+        <UniformMass template="Vec3" name="Mass"/> <!-- Uniform mass component for the object -->
+    </Node>    
+
+    <!-- Interaction spring between two objects -->
+    <StiffSpringForceField template="Vec3" name="Interaction Spring" spring="1 0 10 0.1 1&#x0A;" object1="@Object1" object2="@Object2"/> <!-- Spring force field interacting between Object1 and Object2 -->
+</Node>

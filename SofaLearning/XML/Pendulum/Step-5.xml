@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<Node name="root" gravity="0 0 -9.81" dt="0.01" bbox="-1 -1 -1 1 1 1"> 
+
+ <!-- Now we will add another mechanical object, with its own mass. It will be placed below the ODE solver in the scene graph, so it will be taken into account during the simulation step. -->
+
+    <RequiredPlugin name="Sofa.Component.Constraint.Projective"/>
+    <RequiredPlugin name="Sofa.Component.Mass"/>
+    <RequiredPlugin name="Sofa.Component.ODESolver.Forward"/> 
+    <RequiredPlugin name="Sofa.Component.StateContainer"/>
+    <RequiredPlugin name="Sofa.Component.Visual"/>
+    <RequiredPlugin name="Sofa.Component.IO.Mesh"/> 
+    <RequiredPlugin name="Sofa.Component.Setting"/>
+    <RequiredPlugin name="Sofa.GL.Component.Rendering3D"/>
+
+    <VisualStyle displayFlags="showBehavior"/>
+    <DefaultAnimationLoop/>
+    <EulerExplicitSolver name="Explicit Euler Solver"/>  
+
+    <VisualGrid size="10"/>
+    <LineAxis size="@grid.size"/>
+    <OglSceneFrame/>
+
+    <Node name="Object1" gravity="0 -9.81 0"/>
+        <MechanicalObject template="Vec3d" name="Particles" restScale="1" position="0 0 0 1 0 0" showObject="1" showObjectScale="10"/> 
+        <UniformMass template="Vec3d" name="Mass"/>
+        <FixedProjectiveConstraint template="Vec3d" name="Fix Particles" indices="0"/>
+        <StiffSpringForceField template="Vec3d" name="Internal Spring" spring="0 1 100 0.1 1"/> 
+    </Node>
+
+<!-- CHANGE HERE (NEW OBJECT) -->
+
+    <Node name="Object2" gravity="0 -9.81 0"/>
+        <VisualStyle displayFlags="showVisual hideBehavior hideCollision hideMapping hideOptions" />
+        <MechanicalObject template="Vec3d" name="Particles" restScale="1" position="2 0 0" showObject="1" showObjectScale="10"/> 
+        <UniformMass template="Vec3d" name="Mass"/>
+    </Node>    
+</Node>    

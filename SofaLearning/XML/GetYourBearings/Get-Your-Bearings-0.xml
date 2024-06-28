@@ -1,0 +1,12 @@
+<!-- Inital 3D model -->
+
+<Node name="root" dt="0.01">
+    <RequiredPlugin name="Sofa.Component.IO.Mesh"/> 
+    <RequiredPlugin name="Sofa.Component.Setting"/>
+    <RequiredPlugin name="Sofa.GL.Component.Rendering3D"/>
+    <DefaultAnimationLoop/>
+
+    <BackgroundSetting color="0 0.16862745098 0.21176470588"/>
+    <MeshOBJLoader name="meshLoader_0" filename="mesh/liver-smooth.obj" handleSeams="1"/>
+    <OglModel name="VisualModel" src="@meshLoader_0" color="red"/>
+</Node>

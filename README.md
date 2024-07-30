@@ -1,2 +1,2 @@
 # Debris Mitigation Summer
- Working on soft body robotics for debris mitigation.
+Working on spacecraft trajectory modelling as well as playing around with soft body simulation.
